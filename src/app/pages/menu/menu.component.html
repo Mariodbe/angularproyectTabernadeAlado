@@ -1,0 +1,54 @@
+<!-- HERO -->
+<section style="padding: 120px 0 48px; text-align: center; background-color: #F7F5F2;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 16px;">
+    <h1 style="font-size: 48px; font-family: 'Playfair Display', serif; font-weight: bold; color: #1A1512; margin-bottom: 16px;">
+      {{ catLabels.title }}
+    </h1>
+    <p style="color: #5A4538; font-size: 18px;">{{ catLabels.subtitle }}</p>
+  </div>
+</section>
+
+<!-- FILTROS -->
+<section style="position: sticky; top: 80px; z-index: 40; background-color: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 16px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+      <button (click)="seleccionarCategoria('todos')" style="padding: 12px 24px; border-radius: 9999px; font-weight: 500; transition: all 0.3s; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;" [style.background-color]="categoriaActiva() === 'todos' ? '#C45D3E' : '#E8E2DB'" [style.color]="categoriaActiva() === 'todos' ? 'white' : '#5A4538'">
+        <span style="font-size: 20px;">🍽️</span> {{ catLabels.all }}
+      </button>
+      @for (cat of categorias(); track cat.id) {
+        @if (cat.id !== 'todos') {
+        <button (click)="seleccionarCategoria(cat.id)" style="padding: 12px 24px; border-radius: 9999px; font-weight: 500; transition: all 0.3s; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;" [style.background-color]="categoriaActiva() === cat.id ? '#C45D3E' : '#E8E2DB'" [style.color]="categoriaActiva() === cat.id ? 'white' : '#5A4538'">
+          <span style="font-size: 20px;">{{ cat.icon }}</span> {{ getCategoriaNombre(cat) }}
+        </button>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- PLATOS -->
+<section style="padding: 48px 0; background-color: #F7F5F2; min-height: 100vh;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+      @for (plato of platosFiltrados(); track plato.id) {
+        <div style="background-color: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s; border: 2px solid transparent;" onmouseover="this.style.boxShadow='0 20px 25px rgba(0,0,0,0.15)'; this.style.borderColor='#C45D3E'" onmouseout="this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.borderColor='transparent'">
+          <div style="position: relative; height: 192px; overflow: hidden;">
+            <img [src]="plato.imagen" [alt]="plato.nombre" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position: absolute; top: 12px; left: 12px; display: flex; gap: 8px;">
+              @if (plato.vegetariano) {
+                <span style="background-color: #C45D3E; color: white; padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 500;">🌿</span>
+              }
+            </div>
+          </div>
+          <div style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+              <h3 style="font-size: 18px; font-family: 'Playfair Display', serif; font-weight: bold; color: #1A1512; margin: 0;">{{ getNombre(plato) }}</h3>
+              <span style="font-size: 20px; font-weight: bold; color: #C45D3E;">{{ plato.precio | currency:'EUR' }}</span>
+            </div>
+            <p style="color: #5A4538; font-size: 14px; margin: 0;">{{ getDescripcion(plato) }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

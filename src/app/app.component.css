@@ -1,0 +1,26 @@
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  
+  .mobile-menu-btn {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .desktop-menu {
+    display: flex !important;
+  }
+  
+  .mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+/* Language Dropdown */
+.hidden {
+  display: none !important;
+}
+

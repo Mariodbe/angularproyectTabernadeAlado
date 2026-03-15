@@ -1,0 +1,94 @@
+<section style="padding: 120px 0 48px; text-align: center; background-color: #F7F5F2;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 16px;">
+    <h1 style="font-size: 48px; font-family: 'Playfair Display', serif; font-weight: bold; color: #1A1512; margin-bottom: 16px;">
+      {{ labels.title }}
+    </h1>
+    <p style="color: #5A4538; font-size: 18px;">{{ labels.subtitle }}</p>
+  </div>
+</section>
+
+<section style="padding: 64px 0; background-color: #F7F5F2;">
+  <div style="max-width: 1000px; margin: 0 auto; padding: 0 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 48px;">
+      
+      <!-- FORMULARIO -->
+      <div style="background-color: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h2 style="font-size: 24px; font-family: 'Playfair Display', serif; font-weight: bold; color: #1A1512; margin-bottom: 24px;">📩 {{ labels.sendMessage }}</h2>
+
+        @if (enviado()) {
+          <div style="background-color: rgba(125,140,92,0.2); border: 1px solid #C45D3E; color: #5C8E5C; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+            ✅ {{ labels.sent }}
+          </div>
+        }
+
+        <form (ngSubmit)="enviarMensaje()" style="display: flex; flex-direction: column; gap: 20px;">
+          <div>
+            <label style="display: block; color: #1A1512; font-weight: 500; margin-bottom: 8px;">{{ labels.name }}</label>
+            <input type="text" [(ngModel)]="formulario.nombre" name="nombre" required style="width: 100%; padding: 12px; border: 1px solid #E8E2DB; border-radius: 12px; box-sizing: border-box;" placeholder="Tu nombre">
+          </div>
+          <div>
+            <label style="display: block; color: #1A1512; font-weight: 500; margin-bottom: 8px;">{{ labels.email }}</label>
+            <input type="email" [(ngModel)]="formulario.email" name="email" style="width: 100%; padding: 12px; border: 1px solid #E8E2DB; border-radius: 12px; box-sizing: border-box;" placeholder="tu@email.com">
+          </div>
+          <div>
+            <label style="display: block; color: #1A1512; font-weight: 500; margin-bottom: 8px;">{{ labels.phone }}</label>
+            <input type="tel" [(ngModel)]="formulario.telefono" name="telefono" style="width: 100%; padding: 12px; border: 1px solid #E8E2DB; border-radius: 12px; box-sizing: border-box;" placeholder="+34 600 000 000">
+          </div>
+          <div>
+            <label style="display: block; color: #1A1512; font-weight: 500; margin-bottom: 8px;">{{ labels.message }}</label>
+            <textarea [(ngModel)]="formulario.mensaje" name="mensaje" required rows="4" style="width: 100%; padding: 12px; border: 1px solid #E8E2DB; border-radius: 12px; box-sizing: border-box; resize: vertical;" placeholder="{{ labels.placeholder }}"></textarea>
+          </div>
+          <button type="submit" [disabled]="enviando()" style="width: 100%; background-color: #C45D3E; color: white; padding: 16px; border-radius: 8px; font-size: 18px; font-weight: 500; border: none; cursor: pointer;">
+            @if (enviando()) { {{ labels.sending }} } @else { {{ labels.send }} }
+          </button>
+        </form>
+      </div>
+
+      <!-- INFO -->
+      <div style="display: flex; flex-direction: column; gap: 32px;">
+        <div style="background-color: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <h2 style="font-size: 24px; font-family: 'Playfair Display', serif; font-weight: bold; color: #1A1512; margin-bottom: 24px;">📍 {{ labels.whereWeAre }}</h2>
+          
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 16px;">
+              <div style="width: 48px; height: 48px; background-color: rgba(196,93,62,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">📍</div>
+              <div>
+                <div style="font-weight: 500; color: #1A1512;">{{ labels.address }}</div>
+                <div style="color: #5A4538;">{{ direccion }}</div>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 16px;">
+              <div style="width: 48px; height: 48px; background-color: rgba(196,93,62,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">📞</div>
+              <div>
+                <div style="font-weight: 500; color: #1A1512;">{{ labels.phone }}</div>
+                <a [href]="'tel:' + telefono" style="color: #C45D3E; text-decoration: none;">{{ telefono }}</a>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 16px;">
+              <div style="width: 48px; height: 48px; background-color: rgba(196,93,62,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">✉️</div>
+              <div>
+                <div style="font-weight: 500; color: #1A1512;">{{ labels.email }}</div>
+                <a [href]="'mailto:' + email" style="color: #C45D3E; text-decoration: none;">{{ email }}</a>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 16px;">
+              <div style="width: 48px; height: 48px; background-color: rgba(125,140,92,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">💬</div>
+              <div>
+                <div style="font-weight: 500; color: #1A1512;">{{ labels.whatsapp }}</div>
+                <a href="https://wa.me/34602669575" target="_blank" style="color: #C45D3E; text-decoration: none; font-weight: 500;">Chatear en {{ labels.whatsapp }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background-color: white; border-radius: 16px; overflow: hidden; height: 256px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.841056258225!2d-3.7029853!3d40.4114865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422702ab4a2efb%3A0x4437ff0ea94e3238!2sLa%20Taberna%20de%20Al%20Lado!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
