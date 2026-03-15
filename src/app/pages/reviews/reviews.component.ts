@@ -52,9 +52,9 @@ export class ReviewsComponent {
 
   getSubtitle(): string {
     const lang = this.i18n.currentLanguage();
-    if (lang === 'en') return '4.7 ★ Google (100+ reviews)';
-    if (lang === 'fr') return '4.7 ★ Google (plus de 100 avis)';
-    return '4.7 ★ Google (más de 100 reseñas)';
+    if (lang === 'en') return '4.8 ★ Google (100+ reviews)';
+    if (lang === 'fr') return '4.8 ★ Google (plus de 100 avis)';
+    return '4.8 ★ Google (más de 100 reseñas)';
   }
 
   getBtnText(): string {

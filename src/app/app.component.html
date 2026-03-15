@@ -52,10 +52,24 @@
   <!-- Mobile Menu -->
   @if (isMenuOpen) {
     <div style="position: fixed; top: 80px; left: 0; right: 0; background-color: #2E2420; padding: 16px; z-index: 9999;">
-      <a routerLink="/" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">Inicio</a>
-      <a routerLink="/carta" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">La Carta</a>
-      <a routerLink="/resenas" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">Reseñas</a>
-      <a routerLink="/contacto" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; text-decoration: none;">Contacto</a>
+      <a routerLink="/" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">{{ t('inicio') }}</a>
+      <a routerLink="/carta" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">{{ t('laCarta') }}</a>
+      <a routerLink="/resenas" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">{{ t('resenas') }}</a>
+      <a routerLink="/contacto" (click)="toggleMenu()" style="display: block; color: white; padding: 12px 0; border-bottom: 1px solid #4A3930; text-decoration: none;">{{ t('contacto') }}</a>
+      
+      <!-- Language Selector Mobile -->
+      <div style="padding: 12px 0; border-bottom: 1px solid #4A3930;">
+        <div style="color: white; margin-bottom: 8px; font-size: 14px;">🌐 Idioma / Language</div>
+        <div style="display: flex; gap: 8px;">
+          @for (lang of languages; track lang.code) {
+            <button (click)="setLanguage(lang.code); toggleMenu()" [style.background]="currentLang === lang.code ? '#C45D3E' : '#4A3930'" [style.color]="currentLang === lang.code ? 'white' : 'rgba(255,255,255,0.7)'" style="padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px;">
+              {{ lang.flag }} {{ lang.name }}
+            </button>
+          }
+        </div>
+      </div>
+      
+      <a href="#reservar" (click)="toggleMenu()" style="display: block; background-color: #C45D3E; color: white; padding: 12px; border-radius: 8px; text-align: center; margin-top: 12px; text-decoration: none; font-weight: 500;">{{ t('reservarMesa') }}</a>
     </div>
   }
 <!-- Main Content -->
